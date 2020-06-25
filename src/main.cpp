@@ -7,7 +7,7 @@
 #include <PubSubClient.h> // Allows us to connect to, and publish to the MQTT broker
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
-// #include <ArduinoJson.h>
+#include <ArduinoJson.h>
 #include <nodemculed.h> //Controls blinking leds
 #include <EasyNodeMCU_Wifi.h>
 #include <EasyNodeMCU_MQTT.h>
