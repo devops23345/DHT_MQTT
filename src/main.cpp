@@ -145,15 +145,6 @@ void loop() {
   loop_easy_mqtt();//will handle reconnects
   client.loop();
 
-  //int cState = client.state();
-
-  //int cConnect = client.connected();
-/*   Serial.print(cConnect);
-  Serial.println("");
-  Serial.print("Client State=");
-  Serial.print(cState);
-  Serial.println(""); */
-
   // DHT
   // read temp & humidity
   if (now - previousMillis >= interval) {
