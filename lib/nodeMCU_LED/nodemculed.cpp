@@ -49,8 +49,8 @@ bool setNodeMCULEDState(int state){
 
 
 void toggle_LED(){
-    ledState = !ledState;
-    digitalWrite(LED_BUILTIN, ledState);
+    int ledState = digitalRead(LED_BUILTIN);
+    digitalWrite(LED_BUILTIN, !ledState);
 }
 
 void loop_LED(){
