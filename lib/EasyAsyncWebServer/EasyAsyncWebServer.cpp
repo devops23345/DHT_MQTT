@@ -2,13 +2,13 @@
  *********/
 
 // Import required libraries
-#include <Hash.h>
+// #include <Hash.h>
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include "EasyAsyncWebServer.h"
 
 // Create AsyncWebServer object on port 80
-AsyncWebServer server(serverport);
+AsyncWebServer server(easyAsyncWebServer_Port);
 
 // Replaces placeholder with DHT values
 String processor(const String& var){
@@ -37,8 +37,4 @@ void setup_easyAsyncWebServer(){
 
   // Start server
   server.begin();
-}
-
-void loop(){
-
 }

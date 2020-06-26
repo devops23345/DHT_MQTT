@@ -4,15 +4,12 @@
 // Import required libraries
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include <Hash.h>
 
-
-int serverport = 80;
-extern const float& easyAsyncWebServer_Temp;//bind in main
-extern const float& easyAsyncWebServer_Humidity;//bind in main
+extern int easyAsyncWebServer_Port;
+extern float easyAsyncWebServer_Temp;//bind in main
+extern float easyAsyncWebServer_Humidity;//bind in main
 
 void setup_easyAsyncWebServer();
-
 
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html>
@@ -75,4 +72,5 @@ setInterval(function ( ) {
 }, 10000 ) ;
 </script>
 </html>)rawliteral";
+
 

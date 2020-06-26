@@ -37,8 +37,9 @@ float t = 0.0;
 float h = 0.0;
 
 // AsyncWebServer
-const float& easyAsyncWebServer_Temp = t;//define in main
-const float& easyAsyncWebServer_Humidity = h;//define in main
+float easyAsyncWebServer_Temp;//define in main
+float easyAsyncWebServer_Humidity;//define in main
+int easyAsyncWebServer_Port = 80;
 
 // MQTT
 // Make sure to update this for your own MQTT Broker!
@@ -187,7 +188,8 @@ void loop() {
       Serial.println(h);
       setBlinkState(BLINK_STATE_OK);
     }
-
+    easyAsyncWebServer_Temp = t;//define in main
+    easyAsyncWebServer_Humidity = h;
     // MQTT Data prep
     client.loop();
 
