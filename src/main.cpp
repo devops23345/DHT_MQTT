@@ -37,8 +37,8 @@ float t = 0.0;
 float h = 0.0;
 
 // AsyncWebServer
-float easyAsyncWebServer_Temp;//define in main
-float easyAsyncWebServer_Humidity;//define in main
+float &easyAsyncWebServer_Temp = t;//define in main
+float &easyAsyncWebServer_Humidity = h;//define in main
 int easyAsyncWebServer_Port = 80;
 
 // MQTT
@@ -155,15 +155,6 @@ void loop() {
   loop_easy_mqtt();//will handle reconnects
   client.loop();
 
-  //int cState = client.state();
-
-  //int cConnect = client.connected();
-/*   Serial.print(cConnect);
-  Serial.println("");
-  Serial.print("Client State=");
-  Serial.print(cState);
-  Serial.println(""); */
-
   // DHT
   // read temp & humidity
   if (now - previousMillis >= interval) {
@@ -188,8 +179,7 @@ void loop() {
       Serial.println(h);
       setBlinkState(BLINK_STATE_OK);
     }
-    easyAsyncWebServer_Temp = t;//define in main
-    easyAsyncWebServer_Humidity = h;
+
     // MQTT Data prep
     client.loop();
 

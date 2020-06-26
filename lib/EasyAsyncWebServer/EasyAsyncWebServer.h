@@ -5,9 +5,9 @@
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-extern int easyAsyncWebServer_Port;
-extern float easyAsyncWebServer_Temp;//bind in main
-extern float easyAsyncWebServer_Humidity;//bind in main
+extern int easyAsyncWebServer_Port;//declare in main
+extern float &easyAsyncWebServer_Temp;//bind in main
+extern float &easyAsyncWebServer_Humidity;//bind in main
 
 void setup_easyAsyncWebServer();
 
