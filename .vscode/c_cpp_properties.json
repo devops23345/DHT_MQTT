@@ -9,6 +9,7 @@
                 "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/include",
                 "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/src",
                 "C:/Users/ncolella/.platformio/lib/DHT sensor library_ID19",
+                "C:/Users/ncolella/.platformio/lib/ArduinoJson_ID64/src",
                 "C:/Users/ncolella/.platformio/lib/Adafruit ADXL343_ID6117",
                 "C:/Users/ncolella/.platformio/lib/Adafruit Unified Sensor_ID31",
                 "C:/Users/ncolella/.platformio/lib/Adafruit BusIO_ID6214",
@@ -53,7 +54,6 @@
                 "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/lib/EasyNodeMCU_Wifi",
                 "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/lib/nodeMCU_LED",
                 "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/.pio/libdeps/nodemcuv2/ESPAsyncTCP_ID305/src",
-                "C:/Users/ncolella/.platformio/lib/ArduinoJson_ID64/src",
                 "C:/Users/ncolella/.platformio/lib/Bounce2_ID1106/src",
                 "C:/Users/ncolella/.platformio/packages/tool-unity",
                 ""
@@ -64,6 +64,7 @@
                     "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/include",
                     "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/src",
                     "C:/Users/ncolella/.platformio/lib/DHT sensor library_ID19",
+                    "C:/Users/ncolella/.platformio/lib/ArduinoJson_ID64/src",
                     "C:/Users/ncolella/.platformio/lib/Adafruit ADXL343_ID6117",
                     "C:/Users/ncolella/.platformio/lib/Adafruit Unified Sensor_ID31",
                     "C:/Users/ncolella/.platformio/lib/Adafruit BusIO_ID6214",
@@ -108,7 +109,6 @@
                     "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/lib/EasyNodeMCU_Wifi",
                     "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/lib/nodeMCU_LED",
                     "c:/Users/ncolella/Documents/PlatformIO/Projects/DHT_MQTT/.pio/libdeps/nodemcuv2/ESPAsyncTCP_ID305/src",
-                    "C:/Users/ncolella/.platformio/lib/ArduinoJson_ID64/src",
                     "C:/Users/ncolella/.platformio/lib/Bounce2_ID1106/src",
                     "C:/Users/ncolella/.platformio/packages/tool-unity",
                     ""
