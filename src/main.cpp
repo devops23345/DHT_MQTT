@@ -72,7 +72,13 @@ void callback_mqtt(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
   Serial.println();
-  // handle message arrived
+  // JSON handle message arrived
+  StaticJsonDocument<256> doc;
+  deserializeJson(doc, payload, length);
+  // Produce a prettified JSON document for serial port
+  serializeJsonPretty(doc, Serial);
+  Serial.println();
+
 }
 
 bool setup_mqtt_subscriptions(){
