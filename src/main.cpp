@@ -52,6 +52,10 @@ const char* mqtt_sub_topic_1 = "general/#";
 const char* mqtt_sub_topic_2 = "MQTT_publishers/#";
 
 // MQTT JSON objects
+const int capacity = JSON_OBJECT_SIZE(3);
+StaticJsonDocument<capacity> doc;
+// Declare a buffer to hold the serialized JSON object
+char output_json[128];
 
 // Initialise the WiFi and MQTT Client objects
 WiFiClient easyWiFiClient;
@@ -128,6 +132,9 @@ void setup() {
   Serial.print(mqtt_topic_2);
   Serial.println(F(" ESP8266-1 Client Online"));
 
+  //JSON
+  doc["sensor"] = "DHT-22";//sensor type
+
 }
 
 
@@ -173,12 +180,20 @@ void loop() {
     // MQTT Data prep
     client.loop();
 
-    snprintf(msg, MSG_BUFFER_SIZE, "Temp =  %3.1f Humidity = %3.1f", t, h);
+    //JSON format
+    doc["temp_f"] = t;
+    doc["humidity"] = h;
+    serializeJson(doc, output_json);
+    // Produce a prettified JSON document for serial port
+    serializeJsonPretty(doc, Serial);
 
+    snprintf(msg, MSG_BUFFER_SIZE, output_json);
+    Serial.println("");
     Serial.print("Publish message: ");
     Serial.print("MQTT Topic: ");
     Serial.println(mqtt_topic);
     Serial.println(msg);
+
 
     // Publish the data to the broker
     if (client.publish(mqtt_topic, msg)) {
