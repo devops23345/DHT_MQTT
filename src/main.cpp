@@ -1,9 +1,8 @@
+// *****************************************************************************
+// Program
+// *****************************************************************************
+
 #include <Arduino.h>
-/*
- * ESP8266 (Adafruit HUZZAH) Mosquitto MQTT Publish Example
- * Thomas Varnish (https://github.com/tvarnish), (https://www.instructables.com/member/Tango172)
- * Made as part of my MQTT Instructable - "How to use MQTT with the Raspberry Pi and ESP8266"
- */
 #include <PubSubClient.h> // Allows us to connect to, and publish to the MQTT broker
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
@@ -50,35 +49,78 @@ const char* mqtt_topic_2 = "MQTT_publishers/device_id";
 // MQTT Topics - Subscribe
 const char* mqtt_sub_topic_1 = "general/#";
 const char* mqtt_sub_topic_2 = "MQTT_publishers/#";
+const char* mqtt_sub_topic_3 = "general/local_time";
 
-// MQTT JSON objects
+// JSON
+// JSON objects
 const int capacity = JSON_OBJECT_SIZE(3);
 StaticJsonDocument<capacity> doc;
 // Declare a buffer to hold the serialized JSON object
 char output_json[128];
 
+int current_hour;
+int current_minute;
+int current_second;
+int current_day;
+int current_month;
+int current_year;
+String time_stamp;
+String date_stamp;
+
 // Initialise the WiFi and MQTT Client objects
 WiFiClient easyWiFiClient;
-PubSubClient client(easy_MQTT_server, 1883, easyWiFiClient); // 1883 is the listener port for the Broker
-
+// 1883 is the listener port for the Broker
+PubSubClient client(easy_MQTT_server, 1883, easyWiFiClient);
 #define MSG_BUFFER_SIZE	(100)
 char msg[MSG_BUFFER_SIZE];
 
-void callback_mqtt(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  for (int i=0;i<length;i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
-  // JSON handle message arrived
-  StaticJsonDocument<256> doc;
-  deserializeJson(doc, payload, length);
-  // Produce a prettified JSON document for serial port
-  serializeJsonPretty(doc, Serial);
-  Serial.println();
 
+// *****************************************************************************
+// Function Definitions
+// *****************************************************************************
+void callback_mqtt(char* topic, byte* payload, unsigned int length) {
+  StaticJsonDocument<256> doc;
+
+  // Topic filtering
+  if (String(mqtt_sub_topic_3).equals(String(topic))){
+    Serial.print("Filtered Message arrived [");
+    Serial.print(topic);
+    Serial.print("]");
+    Serial.println("");
+    // JSON message arrived.  Copy payload as it will be overwritten
+    DeserializationError err = deserializeJson(doc, payload, length);
+    if (err) {
+      Serial.print(F("deserializeJson() failed with code "));
+      Serial.println(err.c_str());
+    }
+    else{
+      // Produce a prettified JSON document for serial port
+      serializeJsonPretty(doc, Serial);
+      //extract the content
+      Serial.println("");
+      current_hour = doc["current_time"]["hour"];
+      current_minute = doc["current_time"]["minute"];
+      //current_second = doc["current_time"]["second"];
+      current_day = doc["current_date"]["day"];
+      current_month = doc["current_date"]["month"];
+      current_year = doc["current_date"]["year"];
+      time_stamp = String(String(current_hour) + ":" + String(current_minute));
+      Serial.print("time_stamp= ");
+      Serial.println(time_stamp);
+
+    }
+
+  }
+  else{ //unflitered messages
+    Serial.print("Message arrived [");
+    Serial.print(topic);
+    Serial.print("]");
+    Serial.println("");
+    for (unsigned int i=0;i < length;i++) {
+      Serial.print((char)payload[i]);
+    }
+    Serial.println("");
+  }
 }
 
 bool setup_mqtt_subscriptions(){
@@ -108,10 +150,23 @@ bool setup_mqtt_subscriptions(){
       Serial.println("Not Subscribed");
       result = false;
   }
+  if (client.subscribe(mqtt_sub_topic_3)) {
+      Serial.print("MQTT Topic Subscribed: ");
+      Serial.print(mqtt_sub_topic_1);
+      Serial.println("");
+      result = true;
+  }
+  else
+  {
+      Serial.println("Not Subscribed");
+      result = false;
+  }
   return result;
 }
 
-
+// *****************************************************************************
+// setup()
+// *****************************************************************************
 void setup() {
   // Start serial comm first as other setups will print to the serial port
   // Begin Serial on 115200
@@ -143,7 +198,9 @@ void setup() {
 
 }
 
-
+// *****************************************************************************
+// Main loop()
+// *****************************************************************************
 void loop() {
  //now is used to measure time periods for loops
   unsigned long now = millis();
