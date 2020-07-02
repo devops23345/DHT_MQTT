@@ -7,9 +7,12 @@
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <ArduinoJson.h>
+
+// local libraries
 #include <nodemculed.h> //Controls blinking leds
 #include <EasyNodeMCU_Wifi.h>
 #include <EasyNodeMCU_MQTT.h>
+#include <EasyAsyncWebServer.h>
 
 // WiFi
 // Make sure to update this for your own WiFi network!
@@ -32,6 +35,11 @@ DHT dht(DHTPIN, DHTTYPE);
 // current temperature & humidity, updated in loop()
 float t = 0.0;
 float h = 0.0;
+
+// AsyncWebServer
+float &easyAsyncWebServer_Temp = t;//define in main
+float &easyAsyncWebServer_Humidity = h;//define in main
+int easyAsyncWebServer_Port = 80;
 
 // MQTT
 // Make sure to update this for your own MQTT Broker!
@@ -183,6 +191,9 @@ void setup() {
 
   //WiFi
   setup_easy_wifi(easy_Wifi_SSID, easy_Wifi_Password);
+
+  //AsyncWebServer
+  setup_easyAsyncWebServer();
 
   // MQTT
   setup_easy_mqtt();
