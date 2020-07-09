@@ -19,6 +19,12 @@ String processor(const String& var){
   else if(var == "HUMIDITY"){
     return String(easyAsyncWebServer_Humidity);
   }
+  else if(var == "TIMESTAMP"){
+    return String(easyAsyncWebServer_TimeStamp);
+  }
+  else if(var == "DATESTAMP"){
+    return String(easyAsyncWebServer_DateStamp);
+  }
   return String();
 }
 
@@ -33,6 +39,12 @@ void setup_easyAsyncWebServer(){
   });
   server.on("/humidity", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", String(easyAsyncWebServer_Humidity).c_str());
+  });
+  server.on("/time_stamp", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_P(200, "text/plain", String(easyAsyncWebServer_TimeStamp).c_str());
+  });
+  server.on("/date_stamp", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_P(200, "text/plain", String(easyAsyncWebServer_DateStamp).c_str());
   });
 
   // Start server
