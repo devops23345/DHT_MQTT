@@ -36,11 +36,6 @@ DHT dht(DHTPIN, DHTTYPE);
 float t = 0.0;
 float h = 0.0;
 
-// AsyncWebServer
-float &easyAsyncWebServer_Temp = t;//define in main
-float &easyAsyncWebServer_Humidity = h;//define in main
-int easyAsyncWebServer_Port = 80;
-
 // MQTT
 // Make sure to update this for your own MQTT Broker!
 const char* easy_MQTT_server = "192.168.1.32";
@@ -74,6 +69,14 @@ int current_month;
 int current_year;
 String time_stamp;
 String date_stamp;
+
+// AsyncWebServer
+// AsyncWebServer bindings
+float &easyAsyncWebServer_Temp = t;//defined in main
+float &easyAsyncWebServer_Humidity = h;//defined in main
+String &easyAsyncWebServer_TimeStamp = time_stamp;//defined in main
+String &easyAsyncWebServer_DateStamp = date_stamp;//defined in main
+int easyAsyncWebServer_Port = 80;
 
 // Initialise the WiFi and MQTT Client objects
 WiFiClient easyWiFiClient;
@@ -115,7 +118,8 @@ void callback_mqtt(char* topic, byte* payload, unsigned int length) {
       time_stamp = String(String(current_hour) + ":" + String(current_minute));
       Serial.print("time_stamp= ");
       Serial.println(time_stamp);
-
+      date_stamp = String(String(current_month) + "/" + String(current_day) +
+                          "/" + String(current_year));
     }
 
   }

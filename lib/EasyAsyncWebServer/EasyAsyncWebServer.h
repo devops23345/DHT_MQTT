@@ -8,6 +8,8 @@
 extern int easyAsyncWebServer_Port;//declare in main
 extern float &easyAsyncWebServer_Temp;//bind in main
 extern float &easyAsyncWebServer_Humidity;//bind in main
+extern String &easyAsyncWebServer_TimeStamp;//bind in main
+extern String &easyAsyncWebServer_DateStamp;//bind in main
 
 void setup_easyAsyncWebServer();
 
@@ -45,7 +47,17 @@ const char index_html[] PROGMEM = R"rawliteral(
     <i class="fas fa-tint" style="color:#00add6;"></i>
     <span class="dht-labels">Humidity</span>
     <span id="humidity">%HUMIDITY%</span>
-    <sup class="units">%</sup>
+    <sup class="units">&percnt;</sup>
+  </p>
+  <p>
+    <i class="fas fa-clock" style="color:#00add6;"></i>
+    <span class="dht-labels">Time</span>
+    <span id="timestamp">%TIMESTAMP%</span>
+  </p>
+  <p>
+    <i class="fas fa-calendar-day" style="color:#add800;"></i>
+    <span class="dht-labels">Date</span>
+    <span id="datestamp">%DATESTAMP%</span>
   </p>
 </body>
 <script>
@@ -70,6 +82,29 @@ setInterval(function ( ) {
   xhttp.open("GET", "/humidity", true);
   xhttp.send();
 }, 10000 ) ;
+
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("timestamp").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "/time_stamp", true);
+  xhttp.send();
+}, 10000 ) ;
+
+setInterval(function ( ) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("datestamp").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "/date_stamp", true);
+  xhttp.send();
+}, 10000 ) ;
+
 </script>
 </html>)rawliteral";
 
